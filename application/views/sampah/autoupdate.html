@@ -1,0 +1,55 @@
+
+<script type="text/javascript">
+
+$(function(){
+
+$.ajaxSetup({
+    type:"post",
+    cache:false,
+    dataType: "json"
+})
+
+
+$(document).on("click","td",function(){
+$(this).find("span[class~='caption']").hide();
+$(this).find("input[class~='editor']").fadeIn().focus();
+});
+
+$(document).on("keydown",".editor",function(e){
+if(e.keyCode==13){
+var target=$(e.target);
+var value=target.val();
+var id=target.attr("data-id");
+var data={id:id,value:value};
+if(target.is(".field-saldo-awal")){
+data.modul="saldo_awal";
+}
+
+$.ajax({
+    data:data,
+    url:"<?php echo base_url('home/updatenama_akun2');?>",
+    success: function(a){
+     target.hide();
+     target.siblings("span[class~='caption']").html(value).fadeIn();
+    }
+
+})
+
+}
+
+});
+
+});
+
+</script>
+<style type="text/css">
+
+td {
+    cursor: pointer;
+}
+
+.editor{
+    display: none;
+}
+
+</style>
